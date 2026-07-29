@@ -33,20 +33,32 @@ For managing monitors from a repository, grant `monitors:write` plus
 resolve incidents from here. Leave the key org-wide: keys narrowed to specific
 projects cannot create monitors.
 
-**3. Put it in your environment**, in your shell profile or your project's env
-file:
+**3. Put it where Claude Code can see it.** The plugin's MCP server reads
+`PERSTAT_API_KEY` from the environment, so it has to be set before Claude Code
+starts. Your shell profile is the usual place:
 
 ```bash
 export PERSTAT_API_KEY="pst_your_key_here"
 ```
 
+Claude Code's own settings work too, in `~/.claude/settings.json`:
+
+```json
+{ "env": { "PERSTAT_API_KEY": "pst_your_key_here" } }
+```
+
+Do not put it in a project `.env` file. Claude Code does not read one, and a key
+inside a repository is a key waiting to be committed.
+
 **4. Restart Claude Code** so it picks up the variable.
 
-That is all. The plugin brings the server configuration with it, so there is no
-MCP setup to do by hand.
+**5. Check that it took.** Run `claude mcp list` and look for `perstat` reporting
+`Connected`. This step is worth doing: if the variable never reaches Claude Code,
+the server is still configured and still appears, it just fails every call. Better
+to find that here than halfway through a task.
 
-To check it worked, ask Claude "is anything down?". You should get a summary of
-your services. To update later, run `claude plugin update perstat@datargo`.
+That is all. The plugin brings the server configuration with it, so there is no
+MCP setup to do by hand. To update later, run `claude plugin update perstat@datargo`.
 
 ## What it does
 
