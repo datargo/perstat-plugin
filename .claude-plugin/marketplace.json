@@ -3,18 +3,33 @@
   "name": "datargo",
   "description": "Plugins by Datargo, makers of Perstat.",
   "owner": {
-    "name": "Datargo"
+    "name": "Datargo",
+    "url": "https://perstat.io"
   },
   "plugins": [
     {
       "name": "perstat",
+      "displayName": "Perstat",
       "description": "Create and manage uptime, TLS, DNS and security-posture monitors on Perstat, and work open incidents, without leaving your project.",
       "author": {
-        "name": "Datargo"
+        "name": "Datargo",
+        "url": "https://perstat.io"
       },
       "category": "monitoring",
+      "keywords": [
+        "monitoring",
+        "uptime",
+        "incidents",
+        "on-call",
+        "sre",
+        "tls",
+        "dns",
+        "status-page"
+      ],
       "source": "./",
-      "homepage": "https://perstat.io"
+      "homepage": "https://perstat.io",
+      "repository": "https://github.com/datargo/perstat-plugin",
+      "license": "MIT"
     }
   ]
 }
