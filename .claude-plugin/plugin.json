@@ -1,0 +1,21 @@
+{
+  "name": "perstat",
+  "version": "0.3.1",
+  "description": "Create and manage uptime, TLS, DNS and security-posture monitors on Perstat, and work open incidents, without leaving your project.",
+  "author": {
+    "name": "Datargo"
+  },
+  "homepage": "https://perstat.io",
+  "repository": "https://github.com/datargo/perstat-plugin",
+  "license": "MIT",
+  "keywords": [
+    "monitoring",
+    "uptime",
+    "incidents",
+    "on-call",
+    "sre",
+    "tls",
+    "dns",
+    "status-page"
+  ]
+}
