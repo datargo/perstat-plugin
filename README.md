@@ -9,9 +9,23 @@ incident when one opens.
 failures across regions before alerting, and drives incidents, on-call escalation
 and public status pages.
 
-## Setup
+## Install
 
-**1. Create an API key.** In Perstat, as an Owner or Admin, go to
+You need a [Perstat](https://perstat.io) account and Claude Code.
+
+**1. Add the marketplace and install the plugin:**
+
+```bash
+claude plugin marketplace add datargo/perstat-plugin
+```
+
+```bash
+claude plugin install perstat@datargo
+```
+
+Or do the same interactively with `/plugin` inside Claude Code.
+
+**2. Create an API key.** In Perstat, as an Owner or Admin, go to
 `/o/<your-org>/api-keys` and create a key. It is shown once. Copy it.
 
 For managing monitors from a repository, grant `monitors:write` plus
@@ -19,16 +33,20 @@ For managing monitors from a repository, grant `monitors:write` plus
 resolve incidents from here. Leave the key org-wide: keys narrowed to specific
 projects cannot create monitors.
 
-**2. Put it in your environment**, in your shell profile or your project's env
+**3. Put it in your environment**, in your shell profile or your project's env
 file:
 
 ```bash
 export PERSTAT_API_KEY="pst_your_key_here"
 ```
 
-**3. Restart Claude Code** so it picks up the variable.
+**4. Restart Claude Code** so it picks up the variable.
 
-That is all. The plugin brings the server configuration with it.
+That is all. The plugin brings the server configuration with it, so there is no
+MCP setup to do by hand.
+
+To check it worked, ask Claude "is anything down?". You should get a summary of
+your services. To update later, run `claude plugin update perstat@datargo`.
 
 ## What it does
 

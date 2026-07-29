@@ -1,0 +1,20 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "datargo",
+  "description": "Plugins by Datargo, makers of Perstat.",
+  "owner": {
+    "name": "Datargo"
+  },
+  "plugins": [
+    {
+      "name": "perstat",
+      "description": "Create and manage uptime, TLS, DNS and security-posture monitors on Perstat, and work open incidents, without leaving your project.",
+      "author": {
+        "name": "Datargo"
+      },
+      "category": "monitoring",
+      "source": "./",
+      "homepage": "https://perstat.io"
+    }
+  ]
+}
