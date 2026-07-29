@@ -86,7 +86,7 @@ Three states, and the difference matters:
 | State | Checks | In listings | Plan slot | History |
 | --- | --- | --- | --- | --- |
 | Active | yes | yes | taken | kept |
-| Paused (`set_monitor_enabled: false`) | no | yes | **still taken** | kept |
+| Paused (`set_monitor_enabled`, `enabled: false`) | no | yes | **still taken** | kept |
 | Archived (`archive_monitor`) | no | no | **freed** | kept |
 
 Pausing is for "quiet for now, we still mean it", such as an environment being
