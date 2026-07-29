@@ -90,7 +90,7 @@ leaves them unchanged, which is the normal behaviour and safe.
 Two different tools for two different intentions. Choosing wrongly either wastes
 plan quota or hides a service the team still cares about.
 
-**Pause** with `set_monitor_enabled: false` when the service still matters and
+**Pause** by calling `set_monitor_enabled` with `enabled: false` when the service still matters and
 should be quiet for a while: an environment being rebuilt, a noisy monitor
 pending a fix, a planned migration. It stays in listings and **keeps occupying
 its plan slot**.
@@ -115,7 +115,7 @@ active list rather than extending it, so to show both you need two calls.
 restoring: check what it was watching and whether that still makes sense.
 
 **Restoring.** `restore_monitor` brings an archived monitor back **paused**. Say
-so, and offer the follow-up `set_monitor_enabled: true`, or the user will think
+so, and offer the follow-up call to `set_monitor_enabled` with `enabled: true`, or the user will think
 checking resumed when it did not.
 
 **Changing an archived monitor does not work.** `update_monitor`,
