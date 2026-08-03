@@ -25,37 +25,37 @@ claude plugin install perstat@datargo
 
 Or do the same interactively with `/plugin` inside Claude Code.
 
-**2. Create an API key.** In Perstat, as an Owner or Admin, go to
-`/o/<your-org>/api-keys` and create a key. It is shown once. Copy it.
+**2. Sign in when Claude asks.** That is the whole setup. On the first
+`perstat` tool call the server answers `401`, Claude opens Datargo ID in your
+browser, you pick the organization the connection should apply to, and you are
+back. No key to copy, nothing to paste, nothing in your shell profile.
 
-For managing monitors from a repository, grant `monitors:write` plus
-`incidents:read`. Add `incidents:write` if you also want to acknowledge and
-resolve incidents from here. Leave the key org-wide: keys narrowed to specific
-projects cannot create monitors.
+The connection is bound to that one organization and to you: it can never do
+more than your own role allows. If someone removes you from the organization,
+the connection stops working immediately, without anyone having to revoke a
+token.
 
-**3. Put it where Claude Code can see it.** The plugin's MCP server reads
-`PERSTAT_API_KEY` from the environment, so it has to be set before Claude Code
-starts. Your shell profile is the usual place:
+**3. Check that it took.** Run `claude mcp list` and look for `perstat`
+reporting `Connected`.
+
+You can see and end connections any time at
+<https://id.datargo.com/connections>.
+
+### Running without a browser (CI, cron, servers)
+
+The sign-in flow needs a human. Where there is none, use an API key instead:
+create one in Perstat under `/o/<your-org>/api-keys` (Owner or Admin, shown
+once) and hand it to the server as a header:
 
 ```bash
-export PERSTAT_API_KEY="pst_your_key_here"
+claude mcp add --transport http perstat https://api.perstat.io/mcp \
+  --header "Authorization: Bearer pst_your_key_here"
 ```
 
-Claude Code's own settings work too, in `~/.claude/settings.json`:
-
-```json
-{ "env": { "PERSTAT_API_KEY": "pst_your_key_here" } }
-```
-
-Do not put it in a project `.env` file. Claude Code does not read one, and a key
-inside a repository is a key waiting to be committed.
-
-**4. Restart Claude Code** so it picks up the variable.
-
-**5. Check that it took.** Run `claude mcp list` and look for `perstat` reporting
-`Connected`. This step is worth doing: if the variable never reaches Claude Code,
-the server is still configured and still appears, it just fails every call. Better
-to find that here than halfway through a task.
+A key is also the better fit when you want to narrow access to single projects
+or monitors, which the browser flow does not offer. Do not put it in a project
+`.env` file: Claude Code does not read one, and a key inside a repository is a
+key waiting to be committed.
 
 That is all. The plugin brings the server configuration with it, so there is no
 MCP setup to do by hand. To update later, run `claude plugin update perstat@datargo`.
@@ -178,10 +178,24 @@ from here, by design. Agents stay on monitoring and incidents.
 
 ## Troubleshooting
 
-If the `perstat` tools are missing, `PERSTAT_API_KEY` was not set in the
-environment Claude Code started from. Set it and restart.
+**The `perstat` tools are missing entirely.** MCP servers are wired up when a
+session starts, so a plugin installed mid-session only appears after you start a
+new one. Check with `claude mcp list`.
 
-If `create_monitor` is missing while other tools work, the key is narrowed to
-specific projects or lacks `monitors:write`. Create an org-wide key.
+**A tool call fails with `401`.** That is the sign-in prompt, not a fault. Follow
+the browser flow. If no browser opens, you are probably running headless; use an
+API key instead (see above).
+
+**A tool call fails with `403` and says you have no Perstat account.** The
+Datargo ID you signed in with has never been used on the web. Sign in once at
+<https://app.perstat.io>, then reconnect.
+
+**A tool call fails with `403` and mentions membership.** Someone removed you
+from the organization the connection was made for. This is the intended kill
+switch. Reconnect and pick an organization you are still in.
+
+**`create_monitor` is missing while other tools work.** You are using an API key
+that is narrowed to specific projects, or that lacks `monitors:write`. The
+browser flow never narrows this way; an org-wide key does not either.
 
 More in `skills/perstat-monitoring/references/setup.md`.

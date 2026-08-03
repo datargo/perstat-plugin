@@ -1,17 +1,30 @@
 # Setup and troubleshooting
 
-## Getting an API key
+## Connecting
+
+### Default: sign in through the browser
+
+Nothing to set up in advance. The first tool call returns `401`, Claude opens
+Datargo ID, the human authorises and picks the organization the connection is
+for. Manage or end connections at <https://id.datargo.com/connections>.
+
+The connection acts as that person and can never exceed their role. Removing
+someone from the organization cuts their connections immediately, which is the
+fastest revocation available and needs no token handling.
+
+### Where no human is present: an API key
+
+For CI, cron and servers, and for narrowing access to single projects or
+monitors, which the browser flow does not offer.
 
 1. Sign in to Perstat as an Owner or Admin.
 2. Go to `/o/<your-org>/api-keys`.
 3. Create a key. It is shown once, at creation time, and never again.
 4. Choose scopes (see below).
-5. Put it in the environment as `PERSTAT_API_KEY`.
+5. Hand it to the server as an `Authorization: Bearer pst_…` header.
 
-The key looks like `pst_…`. A browser session cannot be used instead: a key
-belongs to exactly one organization, which removes the ambiguity of a person who
-is a member of several, and it carries scopes, which makes an agent's rights
-predictable.
+Either way the connection belongs to exactly ONE organization, which removes the
+ambiguity of a person who is a member of several.
 
 ## Choosing scopes
 
@@ -58,7 +71,10 @@ claude mcp add --transport http perstat https://api.perstat.io/mcp --header "Aut
 ## What failures mean
 
 **The `perstat` tools are missing entirely.** The MCP server is not connected.
-Check that `PERSTAT_API_KEY` is set in the environment the client was started
+Check that the server is listed at all (`claude mcp list`); it is wired up when
+the session starts, so a plugin installed mid-session only appears in a new one.
+A `401` is the sign-in prompt. For key-based setups, check the header reached
+the client it was started
 from, then restart the client.
 
 **Every call returns an auth error.** The key is wrong, revoked, or belongs to a

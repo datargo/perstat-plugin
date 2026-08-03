@@ -32,12 +32,18 @@ organization API key only:
 Authorization: Bearer pst_…
 ```
 
-A browser session does not count. A key belongs to exactly one organization and
-carries its own scopes, which keeps an agent's rights predictable.
+Two ways in, and they answer different needs. **Signing in through the browser**
+is the default: the first tool call returns `401`, the human authorises once at
+Datargo ID and picks the organization. Nothing is copied or stored, and the
+connection can never do more than that person's own role allows. **An API key**
+is for where no human is present (CI, cron, servers), and for narrowing access to
+single projects or monitors, which the browser flow does not offer.
 
-Set `PERSTAT_API_KEY` in the environment. Keys are created by an Owner or Admin
-under `/o/<org>/api-keys`. If tool calls fail with an auth error, the key is
-missing, revoked, or scoped too narrowly. See `references/setup.md`.
+Either way the connection belongs to exactly ONE organization, which removes the
+ambiguity of a person who is a member of several.
+
+A `401` is the sign-in prompt, not a fault. A `403` means the account is unknown
+in Perstat or the membership is gone. See `references/setup.md`.
 
 ## Identifiers
 
