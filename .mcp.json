@@ -2,10 +2,7 @@
   "mcpServers": {
     "perstat": {
       "type": "http",
-      "url": "https://api.perstat.io/mcp",
-      "headers": {
-        "Authorization": "Bearer ${PERSTAT_API_KEY}"
-      }
+      "url": "https://api.perstat.io/mcp"
     }
   }
 }
