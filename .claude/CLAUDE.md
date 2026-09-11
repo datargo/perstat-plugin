@@ -18,13 +18,10 @@ declared in this same repo.
 
 ## House rules
 
-**No em-dashes anywhere.** Not in skills, README, commit messages or PR bodies.
-Use a comma, a colon or a full stop. This is a standing rule across all of
-Andreas' repositories.
-
-**No `Co-Authored-By` trailers on commits, and no "Generated with" footer on pull
-requests.** Commits carry their author and nothing else. The product name
-"Claude Code" in prose is fine, this is about authorship attribution only.
+**No em-dashes, and no `Co-Authored-By` trailers or "Generated with" footers.**
+Neither in skills, README, commit messages nor PR bodies; use a comma, a colon or
+a full stop instead. Naming "Claude Code" in prose is fine, this is about
+authorship attribution only.
 
 **Commits go through a branch and a pull request.** A pre-commit hook blocks
 commits on `main`.
@@ -43,14 +40,20 @@ will replace the GitHub-based one and has to be restored afterwards; and
 
 The skills should also be checked against the server they describe. Every tool
 name, parameter, monitor type and check region in `skills/` has a counterpart in
-`services/api/src/mcp.rs` and `lib.rs` of the monitor repository. A mismatch
+`services/api/src/mcp.rs` and `lib.rs` of the perstat repository (the local
+`monitor` directory is a symlink to it). A mismatch
 there is the failure mode that matters, because these files are instructions an
 agent follows literally.
 
 ## Open
 
-The plugin tracks the MCP server as of monitor `135bafa` (14 tools, English tool
-descriptions, `list_projects`, archive and restore). Production may still serve
-an older catalogue. Check with `tools/list`: if `list_projects` is absent, the
-deployed build predates it and the plugin describes more than the server offers.
-That gap is the reason the directory listing is on hold.
+Status 2026-08-15: the plugin tracks the MCP server in `services/api/src/mcp.rs`
+of the perstat repository, last changed in perstat `3564853` (2026-08-14). The
+tool catalogue is unchanged since `135bafa`: 14 tools, English tool descriptions,
+including `list_projects`, `list_status_pages`, archive and restore; commits
+since then refined responses and OAuth discoverability, not the catalogue.
+Whether production serves this catalogue cannot be read off the repo. Check with
+`tools/list`: if `list_projects` or `list_status_pages` is absent, the deployed
+build is older and the plugin describes more than the server offers. The
+directory listing stays on hold until such a check confirms the full catalogue
+in production.
