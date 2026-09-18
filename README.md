@@ -169,9 +169,11 @@ additionally re-checks that you are still a member of the organization with a
 sufficient role. Lose the role and writes stop immediately, without the key
 needing to be revoked.
 
-**Heartbeat monitors need wiring.** After one is created, fetch its ping URL from
-the web app and call it from the job. Until the first ping arrives the monitor
-reads `unknown`, which looks like coverage but is not.
+**Heartbeat monitors need wiring.** `create_monitor` returns the ping URL of a new
+heartbeat, and `get_heartbeat_endpoint` returns it again later; call it from the
+job. Until the first ping arrives the monitor reads `unknown`, which looks like
+coverage but is not. The URL is a credential: keep it out of chat and repositories,
+and rotate it in the web app if the conversation that saw it is not trusted.
 
 **Status pages, connectors, API keys, members and billing are not reachable**
 from here, by design. Agents stay on monitoring and incidents.

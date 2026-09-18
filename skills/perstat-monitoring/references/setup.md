@@ -33,7 +33,7 @@ Grant the least the work needs.
 | Scope | Unlocks |
 | --- | --- |
 | `monitors:read` | `get_organization_summary`, `list_projects`, `list_monitors`, `get_monitor` |
-| `monitors:write` | `create_monitor`, `update_monitor`, `set_monitor_enabled`, `archive_monitor`, `restore_monitor` |
+| `monitors:write` | `create_monitor`, `update_monitor`, `set_monitor_enabled`, `archive_monitor`, `restore_monitor`, `get_heartbeat_endpoint`, `rotate_heartbeat_endpoint` |
 | `incidents:read` | `list_incidents`, `get_incident` |
 | `incidents:write` | `acknowledge_incident`, `resolve_incident` |
 | `status-pages:read` | `list_status_pages` |

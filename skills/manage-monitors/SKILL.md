@@ -63,10 +63,14 @@ fails, report which and why rather than continuing blindly.
 plan picks its default. Omit `interval_seconds` to get 300 seconds. Do not send
 `regions` for `agent` or `heartbeat` types, which are evaluated server-side.
 
-**After creating a heartbeat monitor**, tell the user it stays `unknown` until
-the job first pings it, and that the ping URL has to be fetched from the web app
-and wired into the job. An unpinged heartbeat looks like coverage while providing
-none.
+**After creating a heartbeat monitor**, wire it up right away: `create_monitor`
+returns `heartbeat.ping_url` (and `fail_url`), and `get_heartbeat_endpoint`
+returns them again later. Put the URL into the job's configuration or a secret
+file, never into the repository, a log line or a chat message, and do not echo it
+back to the user. Until the job first pings it the monitor stays `unknown`, and an
+unpinged heartbeat looks like coverage while providing none. If the URL may have
+leaked, `rotate_heartbeat_endpoint` issues a new one and kills the old one at once;
+every job still using the old URL goes silent.
 
 ## Editing an existing monitor
 
