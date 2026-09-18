@@ -76,6 +76,8 @@ guess an ID.
 | `set_monitor_enabled` | `monitors:write` | Pause or resume. Does not free a plan slot |
 | `archive_monitor` | `monitors:write` | Retire a monitor. Frees its plan slot |
 | `restore_monitor` | `monitors:write` | Bring one back. It returns paused |
+| `get_heartbeat_endpoint` | `monitors:write` | Secret ping URL of a heartbeat. Logged in the activity log |
+| `rotate_heartbeat_endpoint` | `monitors:write` | New ping URL, the old one dies at once |
 
 `write` implies `read` of the same resource, never across resources.
 

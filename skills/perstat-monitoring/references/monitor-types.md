@@ -226,10 +226,13 @@ to between 30 and 2592000 (30 days). `grace_seconds` is the tolerance on top.
 Set `grace_seconds` to a real fraction of the period. A nightly backup with a
 60 second grace will page on every slow night.
 
-After creating a heartbeat monitor, the ping URL has to be fetched from the web
-app or the REST API and wired into the job. Tell the user this; the monitor stays
+`create_monitor` returns the ping URL of a new heartbeat as `heartbeat.ping_url`
+(plus `fail_url`, the same URL with `/fail`), and `get_heartbeat_endpoint`
+returns it again later. Wire it into the job straight away; the monitor stays
 `unknown` until the first ping arrives, and a heartbeat nobody pings is worse
-than no monitor because it looks like coverage.
+than no monitor because it looks like coverage. The URL is a credential: whoever
+holds it can report success and keep an outage green. Store it where the job
+reads it, never in a repository or a log, and do not repeat it in chat.
 
 ## Shared sub-checks
 
